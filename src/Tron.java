@@ -22,7 +22,9 @@ class MyTronGame {
 	
     public void go() {
         gp = new GamePanel();
-        gp.addMouseListener(new MouseListen());
+        gp.setFocusable(true);
+        gp.requestFocus();
+        //gp.addMouseListener(new MouseListen());
         gp.addKeyListener(new KeyListen());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(BorderLayout.CENTER, gp);
@@ -76,7 +78,7 @@ class MyTronGame {
         }
     }
 	
-    class MouseListen implements MouseListener {
+    /*class MouseListen implements MouseListener {
         public void mouseClicked(MouseEvent e) {}
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
@@ -86,7 +88,7 @@ class MyTronGame {
 			//startNewGame();
             gp.requestFocus(true);
         }
-    }
+    }*/
 	
     class KeyListen implements KeyListener {
         public void keyPressed(KeyEvent e) {
