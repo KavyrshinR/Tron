@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.*;
 
 public class Tron {
     public static void main(String [] args) {
@@ -33,14 +34,8 @@ class MyTronGame {
         moto1 = new Lightcycle(20, 40, 255, 82, 82);
         moto2 = new Lightcycle(70, 40, 200, 0, 100);
 
-        while(moto1.isAlive(moto2) && moto2.isAlive(moto1)) {
-            moto1.move(moto1.dir);
-            moto2.move(moto2.dir);
-            gp.repaint();
-            try {
-                Thread.sleep(60);
-            } catch(Exception ex) {}
-        }
+        Thread t = new Thread(new MyRunnable());
+        t.start();
     }
 	
 	public void startNewGame() {
@@ -50,8 +45,21 @@ class MyTronGame {
 	}
 	
     class GamePanel extends JPanel {
+        private final Graphics2D G;
+        private final BufferedImage buffer;
+
+        public GamePanel() {
+            buffer = new BufferedImage(Width * Scale, Height * Scale, BufferedImage.TYPE_INT_RGB);
+            G = buffer.createGraphics();
+        }
+
         @Override
-        public void paintComponent(Graphics g) {
+        protected void paintComponent(Graphics g) {
+            draw(G);
+            g.drawImage(buffer, 0, 0, null);
+        }
+
+        public void draw(Graphics g) {
             
             g.setColor(backColor);
             g.fillRect(0, 0, Width * Scale, Height * Scale);
@@ -59,9 +67,6 @@ class MyTronGame {
             g.setColor(sharpColor);
             for(int i = 0; i < Width * Scale; i += Scale * 3) {
                 g.drawLine(i, 0, i, Width * Scale);
-            }
-            
-            for(int i = 0; i < Height * Scale; i += Scale * 3) {
                 g.drawLine(0, i, Height * Scale, i);
             }
 
@@ -93,5 +98,17 @@ class MyTronGame {
         public void keyReleased(KeyEvent e) {}
 		public void keyTyped(KeyEvent e) {}	
     }
+
+    class MyRunnable implements Runnable {
+        public void run() {
+            while(moto1.isAlive(moto2) && moto2.isAlive(moto1)) {
+                moto1.move(moto1.dir);
+                moto2.move(moto2.dir);
+                gp.repaint();
+                try {
+                    Thread.sleep(60);
+                } catch(Exception ex) {}
+            }
+        }
+    }
 }
-// LoooooooooooooooooooL
