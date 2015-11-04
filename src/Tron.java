@@ -12,9 +12,10 @@ public class Tron {
 
 class MyTronGame {
     public static int Scale = 8;
-    public static int Width = 84;
-    public static int Height = 84;
+    public static int Width = 80;
+    public static int Height = 80;
     JFrame frame = new JFrame("TronGame");
+    Thread t;
     GamePanel gp;
     Lightcycle moto1;
     Lightcycle moto2;
@@ -31,17 +32,30 @@ class MyTronGame {
         frame.setSize(Width * Scale + 6, Height * Scale + 28);
         frame.setVisible(true);
         frame.setResizable(false);
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Game");
+
+        JMenuItem newGameMenuItem = new JMenuItem("New Game");
+        newGameMenuItem.addActionListener(new NewGameListener());
+
+        menu.add(newGameMenuItem);
+
+        menuBar.add(menu);
+        frame.setJMenuBar(menuBar);
+
         moto1 = new Lightcycle(20, 40, 255, 82, 82);
         moto2 = new Lightcycle(70, 40, 200, 0, 100);
 
-        Thread t = new Thread(new MyRunnable());
+        t = new Thread(new MyRunnable());
         t.start();
     }
 	
 	public void startNewGame() {
 		moto1 = new Lightcycle(20, 40, 255, 82, 82);
 		moto2 = new Lightcycle(70, 40, 200, 0, 100);
-		this.go();
+		t = new Thread(new MyRunnable());
+        t.start();
 	}
 	
     class GamePanel extends JPanel {
@@ -97,6 +111,12 @@ class MyTronGame {
 		
         public void keyReleased(KeyEvent e) {}
 		public void keyTyped(KeyEvent e) {}	
+    }
+
+    class NewGameListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            startNewGame();
+        }
     }
 
     class MyRunnable implements Runnable {
