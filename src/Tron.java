@@ -39,7 +39,7 @@ class MyTronGame {
         gp.addKeyListener(new KeyListen());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(BorderLayout.CENTER, gp);
-        frame.setSize(Width * Scale + 6, Height * Scale + 28);
+        frame.setSize(Width * Scale + 6, Height * Scale + 28 + 22);
         frame.setVisible(true);
         frame.setResizable(false);
 
@@ -120,10 +120,21 @@ class MyTronGame {
 
     class MyRunnable implements Runnable {
         public void run() {
-            while(moto1.isAlive(moto2) && moto2.isAlive(moto1)) {
+            while(true) {
                 moto1.move(moto1.dir);
                 moto2.move(moto2.dir);
                 gp.repaint();
+
+                if (!(moto1.isAlive(moto2)) && moto2.isAlive(moto1)) {
+                    System.out.println("Player 2 winner!");
+                    break;
+                } else if (moto1.isAlive(moto2) && !(moto2.isAlive(moto1))) {
+                    System.out.println("Player 1 winner!");
+                    break;
+                } else if (!(moto1.isAlive(moto2)) && !(moto2.isAlive(moto1))) {
+                    System.out.println("Uhmm");
+                    break;
+                }
                 try {
                     Thread.sleep(60);
                 } catch(Exception ex) {}
