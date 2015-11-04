@@ -23,16 +23,6 @@ class MyTronGame {
     Color sharpColor = new Color(51, 9, 221);
 	
     public void go() {
-        gp = new GamePanel();
-        gp.setFocusable(true);
-        gp.requestFocus();
-        gp.addKeyListener(new KeyListen());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(BorderLayout.CENTER, gp);
-        frame.setSize(Width * Scale + 6, Height * Scale + 28);
-        frame.setVisible(true);
-        frame.setResizable(false);
-
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Game");
 
@@ -43,6 +33,15 @@ class MyTronGame {
 
         menuBar.add(menu);
         frame.setJMenuBar(menuBar);
+        gp = new GamePanel();
+        gp.setFocusable(true);
+        gp.requestFocus();
+        gp.addKeyListener(new KeyListen());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(BorderLayout.CENTER, gp);
+        frame.setSize(Width * Scale + 6, Height * Scale + 28);
+        frame.setVisible(true);
+        frame.setResizable(false);
 
         moto1 = new Lightcycle(20, 40, 255, 82, 82);
         moto2 = new Lightcycle(70, 40, 200, 0, 100);
@@ -98,15 +97,15 @@ class MyTronGame {
 	
     class KeyListen implements KeyListener {
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == KeyEvent.VK_UP && moto2.dir != 1) {moto2.dir = 0;}
-            if(e.getKeyCode() == KeyEvent.VK_DOWN && moto2.dir != 0) {moto2.dir = 1;}
-            if(e.getKeyCode() == KeyEvent.VK_LEFT && moto2.dir != 3) {moto2.dir = 2;}
-            if(e.getKeyCode() == KeyEvent.VK_RIGHT && moto2.dir != 2) {moto2.dir = 3;}
-            
             if(e.getKeyCode() == KeyEvent.VK_W && moto1.dir != 1) {moto1.dir = 0;}
             if(e.getKeyCode() == KeyEvent.VK_S && moto1.dir != 0) {moto1.dir = 1;}
             if(e.getKeyCode() == KeyEvent.VK_A && moto1.dir != 3) {moto1.dir = 2;}
             if(e.getKeyCode() == KeyEvent.VK_D && moto1.dir != 2) {moto1.dir = 3;}
+            
+            if(e.getKeyCode() == KeyEvent.VK_UP && moto2.dir != 1) {moto2.dir = 0;}
+            if(e.getKeyCode() == KeyEvent.VK_DOWN && moto2.dir != 0) {moto2.dir = 1;}
+            if(e.getKeyCode() == KeyEvent.VK_LEFT && moto2.dir != 3) {moto2.dir = 2;}
+            if(e.getKeyCode() == KeyEvent.VK_RIGHT && moto2.dir != 2) {moto2.dir = 3;}
         }
 		
         public void keyReleased(KeyEvent e) {}
