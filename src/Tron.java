@@ -15,6 +15,7 @@ class MyTronGame {
     public static int Width = 80;
     public static int Height = 80;
     JFrame frame = new JFrame("TronGame");
+    CurrentOs os = new CurrentOs();
     Thread t;
     GamePanel gp;
     Lightcycle moto1;
@@ -39,7 +40,10 @@ class MyTronGame {
         gp.addKeyListener(new KeyListen());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(BorderLayout.CENTER, gp);
-        frame.setSize(Width * Scale + 6, Height * Scale + 28 + 22);
+
+        os.identifyOs();
+        frame.setSize(Width * Scale + os.getWidth(), Height * Scale + os.getHeight());
+
         frame.setVisible(true);
         frame.setResizable(false);
 
