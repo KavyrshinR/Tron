@@ -47,16 +47,18 @@ class MyTronGame {
         frame.setVisible(true);
         frame.setResizable(false);
 
-        moto1 = new Lightcycle(20, 40, 255, 82, 82);
-        moto2 = new Lightcycle(70, 40, 200, 0, 100);
+        moto1 = new Lightcycle(20, 40, 3, 255, 82, 82);
+        moto2 = new Lightcycle(70, 40, 2, 200, 0, 100);
 
         t = new Thread(new MyRunnable());
         t.start();
     }
 	
 	public void startNewGame() {
-		moto1 = new Lightcycle(20, 40, 255, 82, 82);
-		moto2 = new Lightcycle(70, 40, 200, 0, 100);
+		moto1.setCoordinate(20, 40);
+        moto1.setDirection(3);
+		moto2.setCoordinate(70, 40);
+        moto2.setDirection(2);
 		t = new Thread(new MyRunnable());
         t.start();
 	}
@@ -86,6 +88,10 @@ class MyTronGame {
                 g.drawLine(i, 0, i, Width * Scale);
                 g.drawLine(0, i, Height * Scale, i);
             }
+
+            g.setColor(Color.WHITE);
+            String str = "Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2";
+            g.drawString(str, 280, 40);
 
             g.setColor(moto1.color);
             for(int i = 0; i < moto1.len; i++) {
@@ -130,10 +136,10 @@ class MyTronGame {
                 gp.repaint();
 
                 if (!(moto1.isAlive(moto2)) && moto2.isAlive(moto1)) {
-                    System.out.println("Player 2 winner!");
+                    moto2.win++;
                     break;
                 } else if (moto1.isAlive(moto2) && !(moto2.isAlive(moto1))) {
-                    System.out.println("Player 1 winner!");
+                    moto1.win++;
                     break;
                 } else if (!(moto1.isAlive(moto2)) && !(moto2.isAlive(moto1))) {
                     System.out.println("Uhmm");

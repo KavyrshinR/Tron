@@ -6,10 +6,26 @@ class Lightcycle {
     Color color;
     int len = 1;
     int dir = 0;
+    int win = 0;
 	
-    public Lightcycle(int x, int y, int r, int g, int b) {
+    public Lightcycle(int x, int y, int d, int r, int g, int b) {
         this.color = new Color(r, g, b);
         coordX[0] = x; coordY[0] = y;
+        dir = d;
+    }
+
+    public void setCoordinate(int x, int y) {
+        this.len = 1;
+        this.coordX = null;
+        this.coordY = null;
+        this.coordX = new int[10000];
+        this.coordY = new int[10000];
+        this.coordX[0] = x;
+        this.coordY[0] = y;
+    }
+
+    public void setDirection(int d) {
+        dir = d;
     }
 	
     boolean isAlive(Lightcycle enemy) {
