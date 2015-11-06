@@ -28,9 +28,12 @@ class MyTronGame {
         JMenu menu = new JMenu("Game");
 
         JMenuItem newGameMenuItem = new JMenuItem("New Game");
+        JMenuItem resetGameResult = new JMenuItem("Reset Result");
         newGameMenuItem.addActionListener(new NewGameListener());
+        resetGameResult.addActionListener(new ResetGameListener());
 
         menu.add(newGameMenuItem);
+        menu.add(resetGameResult);
 
         menuBar.add(menu);
         frame.setJMenuBar(menuBar);
@@ -125,6 +128,14 @@ class MyTronGame {
     class NewGameListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             startNewGame();
+        }
+    }
+
+    class ResetGameListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            moto1.win = 0;
+            moto2.win = 0;
+            gp.repaint();
         }
     }
 
