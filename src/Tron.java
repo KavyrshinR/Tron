@@ -50,7 +50,7 @@ class MyTronGame {
         frame.setVisible(true);
         frame.setResizable(false);
 
-        moto1 = new Lightcycle(20, 40, 3, 255, 82, 82);
+        moto1 = new Lightcycle(10, 40, 3, 255, 82, 82);
         moto2 = new Lightcycle(70, 40, 2, 200, 0, 100);
 
         t = new Thread(new MyRunnable());
@@ -58,7 +58,7 @@ class MyTronGame {
     }
 	
 	public void startNewGame() {
-		moto1.setCoordinate(20, 40);
+		moto1.setCoordinate(10, 40);
         moto1.setDirection(3);
 		moto2.setCoordinate(70, 40);
         moto2.setDirection(2);

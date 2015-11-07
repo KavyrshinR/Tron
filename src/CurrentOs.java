@@ -8,8 +8,8 @@ class CurrentOs {
 		os = System.getProperty("os.name");
 
 		if (os.indexOf("nux") >= 0) {
-			this.setWidth(1);
-			this.setHeight(22);
+			this.setWidth(2);
+			this.setHeight(23);
 		} else if (os.indexOf("ndows") >= 0) {
 			this.setWidth(6);
 			this.setHeight(50);
