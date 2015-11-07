@@ -1,34 +1,38 @@
 class CurrentOs {
 	String os;
 	int x;
+	private int width;
+	private int height;
 
 	public void identifyOs() {
 		os = System.getProperty("os.name");
+
+		if (os.indexOf("nux") >= 0) {
+			this.setWidth(1);
+			this.setHeight(22);
+		} else if (os.indexOf("ndows") >= 0) {
+			this.setWidth(6);
+			this.setHeight(50);
+		}
 	}
 
 	public String getCurrentOs() {
 		return os;
 	}
 
+	public void setWidth(int w) {
+		width = w;
+	}
+
+	public void setHeight(int h) {
+		height = h;
+	}
+
 	public int getWidth() {
-		if (os.indexOf("nux") >= 0) {
-			x = 1;
-			return x;
-		} else if (os.indexOf("ndows") >= 0) {
-			x = 6;
-			return x;
-		}
-		return 0;
+		return width;
 	}
 
 	public int getHeight() {
-		if (os.indexOf("nux") >= 0) {
-			x = 22;
-			return x;
-		} else if (os.indexOf("ndows") >= 0) {
-			x = 22 + 28;
-			return x;
-		}
-		return 0;
+		return height;
 	}
 }
