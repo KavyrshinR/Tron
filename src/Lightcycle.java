@@ -5,7 +5,7 @@ class Lightcycle {
     int[] coordY = new int[10000];
     Color color;
     int len = 1;
-    int dir = 0;
+    private int dir = 0;
     int win = 0;
 	
     public Lightcycle(int x, int y, int d, int r, int g, int b) {
@@ -25,7 +25,13 @@ class Lightcycle {
     }
 
     public void setDirection(int d) {
-        dir = d;
+        if(d >= 0 && d <= 3) {
+            dir = d;
+        }
+    }
+
+    public int getDirection() {
+        return dir;
     }
 	
     boolean isAlive(Lightcycle enemy) {
@@ -58,7 +64,7 @@ class Lightcycle {
         if(d == 1) {if(coordY[0] == MyTronGame.Height - 1){coordY[0] = 0;} else coordY[0] += 1;}
         if(d == 2) {if(coordX[0] == 0){coordX[0] = MyTronGame.Width - 1;} else coordX[0] -= 1;}
         if(d == 3) {if(coordX[0] == MyTronGame.Width - 1){coordX[0] = 0;} else coordX[0] += 1;}
-        len++;
+        this.len++;
     }
 }
 // LoooooooooooooooooooL

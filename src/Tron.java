@@ -110,15 +110,31 @@ class MyTronGame {
 	
     class KeyListen implements KeyListener {
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == KeyEvent.VK_W && moto1.dir != 1) {moto1.dir = 0;}
-            if(e.getKeyCode() == KeyEvent.VK_S && moto1.dir != 0) {moto1.dir = 1;}
-            if(e.getKeyCode() == KeyEvent.VK_A && moto1.dir != 3) {moto1.dir = 2;}
-            if(e.getKeyCode() == KeyEvent.VK_D && moto1.dir != 2) {moto1.dir = 3;}
+            if(e.getKeyCode() == KeyEvent.VK_W && moto1.getDirection() != 1) {
+                moto1.setDirection(0);
+            }
+            if(e.getKeyCode() == KeyEvent.VK_S && moto1.getDirection() != 0) {
+                moto1.setDirection(1);
+            }
+            if(e.getKeyCode() == KeyEvent.VK_A && moto1.getDirection() != 3) {
+                moto1.setDirection(2);
+            }
+            if(e.getKeyCode() == KeyEvent.VK_D && moto1.getDirection() != 2) {
+                moto1.setDirection(3);
+            }
             
-            if(e.getKeyCode() == KeyEvent.VK_UP && moto2.dir != 1) {moto2.dir = 0;}
-            if(e.getKeyCode() == KeyEvent.VK_DOWN && moto2.dir != 0) {moto2.dir = 1;}
-            if(e.getKeyCode() == KeyEvent.VK_LEFT && moto2.dir != 3) {moto2.dir = 2;}
-            if(e.getKeyCode() == KeyEvent.VK_RIGHT && moto2.dir != 2) {moto2.dir = 3;}
+            if(e.getKeyCode() == KeyEvent.VK_UP && moto2.getDirection() != 1) {
+                moto2.setDirection(0);
+            }
+            if(e.getKeyCode() == KeyEvent.VK_DOWN && moto2.getDirection() != 0) {
+                moto2.setDirection(1);
+            }
+            if(e.getKeyCode() == KeyEvent.VK_LEFT && moto2.getDirection() != 3) {
+                moto2.setDirection(2);
+            }
+            if(e.getKeyCode() == KeyEvent.VK_RIGHT && moto2.getDirection() != 2) {
+                moto2.setDirection(3);
+            }
         }
 		
         public void keyReleased(KeyEvent e) {}
@@ -142,8 +158,8 @@ class MyTronGame {
     class MyRunnable implements Runnable {
         public void run() {
             while(true) {
-                moto1.move(moto1.dir);
-                moto2.move(moto2.dir);
+                moto1.move(moto1.getDirection());
+                moto2.move(moto2.getDirection());
                 gp.repaint();
 
                 if (!(moto1.isAlive(moto2)) && moto2.isAlive(moto1)) {
