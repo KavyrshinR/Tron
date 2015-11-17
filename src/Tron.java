@@ -16,6 +16,7 @@ class MyTronGame {
     public static int Height = 80;
     JFrame frame = new JFrame("TronGame");
     CurrentOs os = new CurrentOs();
+    JMenu result;
     Thread t;
     GamePanel gp;
     Lightcycle moto1;
@@ -26,6 +27,7 @@ class MyTronGame {
     public void go() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Game");
+        result = new JMenu("Result");
 
         JMenuItem newGameMenuItem = new JMenuItem("New Game");
         JMenuItem resetGameResult = new JMenuItem("Reset Result");
@@ -36,6 +38,7 @@ class MyTronGame {
         menu.add(resetGameResult);
 
         menuBar.add(menu);
+        menuBar.add(result);
         frame.setJMenuBar(menuBar);
         gp = new GamePanel();
         gp.setFocusable(true);
@@ -93,8 +96,7 @@ class MyTronGame {
             }
 
             g.setColor(Color.WHITE);
-            String str = "Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2";
-            g.drawString(str, 280, 40);
+            result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
 
             g.setColor(moto1.color);
             for(int i = 0; i < moto1.len; i++) {
@@ -158,8 +160,8 @@ class MyTronGame {
     class MyRunnable implements Runnable {
         public void run() {
             while(true) {
-                moto1.move(moto1.getDirection());
-                moto2.move(moto2.getDirection());
+                moto1.move();
+                moto2.move();
                 gp.repaint();
 
                 if (!(moto1.isAlive(moto2)) && moto2.isAlive(moto1)) {
@@ -169,7 +171,6 @@ class MyTronGame {
                     moto1.win++;
                     break;
                 } else if (!(moto1.isAlive(moto2)) && !(moto2.isAlive(moto1))) {
-                    System.out.println("Uhmm");
                     break;
                 }
                 try {

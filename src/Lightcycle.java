@@ -50,7 +50,7 @@ class Lightcycle {
         return true;
     }
     
-    public void move(int d) {
+    public void move() {
 
         for(int i = len; i > 0; i--) {
                 coordX[i] = coordX[i - 1];
@@ -60,10 +60,10 @@ class Lightcycle {
                 coordY[i] = coordY[i - 1];
         }
 
-        if(d == 0) {if(coordY[0] == 0){coordY[0] = MyTronGame.Height - 1;} else coordY[0] -= 1;}
-        if(d == 1) {if(coordY[0] == MyTronGame.Height - 1){coordY[0] = 0;} else coordY[0] += 1;}
-        if(d == 2) {if(coordX[0] == 0){coordX[0] = MyTronGame.Width - 1;} else coordX[0] -= 1;}
-        if(d == 3) {if(coordX[0] == MyTronGame.Width - 1){coordX[0] = 0;} else coordX[0] += 1;}
+        if(dir == 0) {if(coordY[0] == 0){coordY[0] = MyTronGame.Height - 1;} else coordY[0] -= 1;}
+        if(dir == 1) {if(coordY[0] == MyTronGame.Height - 1){coordY[0] = 0;} else coordY[0] += 1;}
+        if(dir == 2) {if(coordX[0] == 0){coordX[0] = MyTronGame.Width - 1;} else coordX[0] -= 1;}
+        if(dir == 3) {if(coordX[0] == MyTronGame.Width - 1){coordX[0] = 0;} else coordX[0] += 1;}
         this.len++;
     }
 }
