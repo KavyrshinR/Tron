@@ -25,6 +25,7 @@ class MyTronGame {
     Color sharpColor = new Color(51, 9, 221);
 	
     public void go() {
+        os.identifyOs();
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Game");
         result = new JMenu("Result");
@@ -47,7 +48,6 @@ class MyTronGame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(BorderLayout.CENTER, gp);
 
-        os.identifyOs();
         frame.setSize(Width * Scale + os.getWidth(), Height * Scale + os.getHeight());
 
         frame.setVisible(true);
@@ -94,9 +94,6 @@ class MyTronGame {
                 g.drawLine(i, 0, i, Width * Scale);
                 g.drawLine(0, i, Height * Scale, i);
             }
-
-            g.setColor(Color.WHITE);
-            result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
 
             g.setColor(moto1.color);
             for(int i = 0; i < moto1.len; i++) {
@@ -153,7 +150,7 @@ class MyTronGame {
         public void actionPerformed(ActionEvent event) {
             moto1.win = 0;
             moto2.win = 0;
-            gp.repaint();
+            result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
         }
     }
 
@@ -166,9 +163,11 @@ class MyTronGame {
 
                 if (!(moto1.isAlive(moto2)) && moto2.isAlive(moto1)) {
                     moto2.win++;
+                    result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
                     break;
                 } else if (moto1.isAlive(moto2) && !(moto2.isAlive(moto1))) {
                     moto1.win++;
+                    result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
                     break;
                 } else if (!(moto1.isAlive(moto2)) && !(moto2.isAlive(moto1))) {
                     break;

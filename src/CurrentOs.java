@@ -5,12 +5,12 @@ class CurrentOs {
 	private int height;
 
 	public void identifyOs() {
-		os = System.getProperty("os.name");
+		os = System.getProperty("os.name").toLowerCase();
 
 		if (os.indexOf("nux") >= 0) {
 			this.setWidth(2);
 			this.setHeight(23);
-		} else if (os.indexOf("ndows") >= 0) {
+		} else if (os.indexOf("win") >= 0) {
 			this.setWidth(6);
 			this.setHeight(50);
 		}
