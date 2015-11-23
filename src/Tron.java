@@ -161,15 +161,15 @@ class MyTronGame {
                 moto2.move();
                 gp.repaint();
 
-                if (!(moto1.isAlive(moto2)) && moto2.isAlive(moto1)) {
-                    moto2.win++;
-                    result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
+                if (!(moto1.isAlive(moto2)) && !(moto2.isAlive(moto1))) {
                     break;
-                } else if (moto1.isAlive(moto2) && !(moto2.isAlive(moto1))) {
+                } else if (!(moto2.isAlive(moto1))) {
                     moto1.win++;
                     result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
                     break;
-                } else if (!(moto1.isAlive(moto2)) && !(moto2.isAlive(moto1))) {
+                } else if (!(moto1.isAlive(moto2))) {
+                    moto2.win++;
+                    result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
                     break;
                 }
                 try {
