@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.*;
 
 public class Tron {
     public static void main(String [] args) {
@@ -19,6 +21,7 @@ class MyTronGame {
     JMenu result;
     Thread t;
     GamePanel gp;
+	Area area;
     Lightcycle moto1;
     Lightcycle moto2;
     Color backColor = new Color(80, 102, 80);
@@ -32,11 +35,14 @@ class MyTronGame {
 
         JMenuItem newGameMenuItem = new JMenuItem("New Game");
         JMenuItem resetGameResult = new JMenuItem("Reset Result");
+		JMenuItem loadMenuItem = new JMenuItem("Load Level");
+		loadMenuItem.addActionListener(new LoadListener());
         newGameMenuItem.addActionListener(new NewGameListener());
         resetGameResult.addActionListener(new ResetGameListener());
 
         menu.add(newGameMenuItem);
         menu.add(resetGameResult);
+		menu.add(loadMenuItem);
 
         menuBar.add(menu);
         menuBar.add(result);
@@ -45,6 +51,9 @@ class MyTronGame {
         gp.setFocusable(true);
         gp.requestFocus();
         gp.addKeyListener(new KeyListen());
+		
+		area = new Area();
+		
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(BorderLayout.CENTER, gp);
 
@@ -104,6 +113,11 @@ class MyTronGame {
             for(int i = 0; i < moto2.len; i++) {
                 g.fillRect(moto2.coordX[i] * Scale, moto2.coordY[i] * Scale, Scale - 1, Scale - 1);
             }
+			
+			g.setColor(new Color(250, 10, 10));
+            for (int i = 0; i < area.count; i++) {
+				g.fillRect(area.wallArray[i].x * Scale, area.wallArray[i].y * Scale, Scale, Scale);
+			}
         }
     }
 	
@@ -153,6 +167,29 @@ class MyTronGame {
             result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
         }
     }
+	
+	class LoadListener implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			JFileChooser fc = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("*.txt", "*.*");
+			fc.setFileFilter(filter);
+			fc.showOpenDialog(frame);
+			loadFile(fc.getSelectedFile());
+			startNewGame();
+			gp.repaint();
+		}
+	}
+	
+
+	void loadFile(File f) {
+		try {
+			ObjectInputStream is = new ObjectInputStream(new FileInputStream(f));
+			area = (Area) is.readObject();
+			is.close();
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 
     class MyRunnable implements Runnable {
         public void run() {
@@ -161,13 +198,13 @@ class MyTronGame {
                 moto2.move();
                 gp.repaint();
 
-                if (!(moto1.isAlive(moto2)) && !(moto2.isAlive(moto1))) {
+                if (!(moto1.isAlive(moto2, area)) && !(moto2.isAlive(moto1, area))) {
                     break;
-                } else if (!(moto2.isAlive(moto1))) {
+                } else if (!(moto2.isAlive(moto1, area))) {
                     moto1.win++;
                     result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
                     break;
-                } else if (!(moto1.isAlive(moto2))) {
+                } else if (!(moto1.isAlive(moto2, area))) {
                     moto2.win++;
                     result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
                     break;

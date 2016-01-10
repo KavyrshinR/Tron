@@ -34,7 +34,7 @@ class Lightcycle {
         return dir;
     }
 	
-    boolean isAlive(Lightcycle enemy) {
+    boolean isAlive(Lightcycle enemy, Area area) {
         for(int i = 1; i < len; i++) {
             if((coordX[0] == coordX[i]) && (coordY[0] == coordY[i])) { 
                 return false;
@@ -46,6 +46,12 @@ class Lightcycle {
                 return false;
             }
         }
+		
+		for(int i = 0; i < area.count; i++) {
+			if((coordX[0] == area.wallArray[i].x) && (coordY[0] == area.wallArray[i].y)) {
+				return false;
+			}
+		}
 
         return true;
     }
