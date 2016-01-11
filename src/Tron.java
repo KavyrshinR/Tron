@@ -16,6 +16,7 @@ class MyTronGame {
     public static int Scale = 8;
     public static int Width = 80;
     public static int Height = 80;
+	boolean pause = false;
     JFrame frame = new JFrame("TronGame");
     CurrentOs os = new CurrentOs();
     JMenu result;
@@ -36,6 +37,10 @@ class MyTronGame {
         JMenuItem newGameMenuItem = new JMenuItem("New Game");
         JMenuItem resetGameResult = new JMenuItem("Reset Result");
 		JMenuItem loadMenuItem = new JMenuItem("Load Level");
+		
+		JMenuItem pauseMenu = new JMenuItem("Pause");
+		pauseMenu.addActionListener(new PauseListener());
+		
 		loadMenuItem.addActionListener(new LoadListener());
         newGameMenuItem.addActionListener(new NewGameListener());
         resetGameResult.addActionListener(new ResetGameListener());
@@ -46,6 +51,8 @@ class MyTronGame {
 
         menuBar.add(menu);
         menuBar.add(result);
+		menuBar.add(pauseMenu);
+		
         frame.setJMenuBar(menuBar);
         gp = new GamePanel();
         gp.setFocusable(true);
@@ -180,6 +187,16 @@ class MyTronGame {
 		}
 	}
 	
+	class PauseListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            if (pause) {
+				pause = false;
+			} else {
+				pause = true;
+				result.setText("Pause");
+			}
+        }
+    }
 
 	void loadFile(File f) {
 		try {
@@ -194,24 +211,26 @@ class MyTronGame {
     class MyRunnable implements Runnable {
         public void run() {
             while(true) {
-                moto1.move();
-                moto2.move();
-                gp.repaint();
+				if(!pause) {
+					moto1.move();
+					moto2.move();
+					gp.repaint();
 
-                if (!(moto1.isAlive(moto2, area)) && !(moto2.isAlive(moto1, area))) {
-                    break;
-                } else if (!(moto2.isAlive(moto1, area))) {
-                    moto1.win++;
-                    result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
-                    break;
-                } else if (!(moto1.isAlive(moto2, area))) {
-                    moto2.win++;
-                    result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
-                    break;
-                }
-                try {
-                    Thread.sleep(60);
-                } catch(Exception ex) {}
+					if (!(moto1.isAlive(moto2, area)) && !(moto2.isAlive(moto1, area))) {
+						break;
+					} else if (!(moto2.isAlive(moto1, area))) {
+						moto1.win++;
+						result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
+						break;
+					} else if (!(moto1.isAlive(moto2, area))) {
+						moto2.win++;
+						result.setText("Player 1| " + moto1.win + " |vs| " + moto2.win + " |Player 2");
+						break;
+					}
+				}
+				try {
+					Thread.sleep(60);
+				} catch(Exception ex) {}
             }
         }
     }
